@@ -1,0 +1,101 @@
+/sharc/output/*.txt
+/sharc/output/*.png
+/sharc/output_*/*
+/sharc/campaigns/*/output/
+
+
+__pycache__
+.spyproject
+
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+venv/
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# pyenv python configuration file
+.python-version
+/sharc/antenna/figs
+/sharc/.venv/
+.DS_Store
+.venv/
+venv/
+myenv/pyvenv.cfg
+myenv/Scripts/activate
+myenv/Scripts/activate.bat
+myenv/Scripts/Activate.ps1
+myenv/Scripts/deactivate.bat
+myenv/Scripts/pip.exe
+myenv/Scripts/pip3.12.exe
+myenv/Scripts/pip3.exe
+myenv/Scripts/python.exe
+myenv/Scripts/pythonw.exe
+
+# Ignore output files
+[IMT]*.txt
+[SYS]*.txt
+IMT_*.txt
+SYS_*.txt
+
+
+# Ignores campaigns output
+
+/sharc/campaigns/imt_*/output/output_imt*/*.csv
+/sharc/campaigns/imt_*/output/output_imt*/*.ini
+/sharc/campaigns/imt_*/output/Figs/*.png
