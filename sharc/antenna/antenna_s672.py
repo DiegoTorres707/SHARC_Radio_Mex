@@ -70,20 +70,20 @@ if __name__ == '__main__':
     param = ParametersFssSs()
     param.antenna_gain = 33
     param.antenna_pattern = "ITU-R S.672-4"
-    param.antenna_3_dB = 1.9
-    psi = np.linspace(1, 30, num=1000)
+    param.antenna_3_dB = 3.8
+    psi = np.linspace(1, 100, num=10000)
 
     param.antenna_l_s = -20
     antenna = AntennaS672(param)
     gain20 = antenna.calculate_gain(off_axis_angle_vec=psi)
 
-    param.antenna_l_s = -25
-    antenna = AntennaS672(param)
-    gain25 = antenna.calculate_gain(off_axis_angle_vec=psi)
+    #param.antenna_l_s = -25
+    #antenna = AntennaS672(param)
+    #gain25 = antenna.calculate_gain(off_axis_angle_vec=psi)
 
-    param.antenna_l_s = -30
-    antenna = AntennaS672(param)
-    gain30 = antenna.calculate_gain(off_axis_angle_vec=psi)
+    #param.antenna_l_s = -30
+    #antenna = AntennaS672(param)
+    #gain30 = antenna.calculate_gain(off_axis_angle_vec=psi)
 
     fig = plt.figure(
         figsize=(12, 7), facecolor='w',
@@ -91,19 +91,19 @@ if __name__ == '__main__':
     )  # create a figure object
 
     plt.semilogx(
-        psi, gain20 - param.antenna_gain,
+        psi, gain20,
         "-b", label="$L_S = -20$ dB",
     )
-    plt.semilogx(
-        psi, gain25 - param.antenna_gain,
-        "-r", label="$L_S = -25$ dB",
-    )
-    plt.semilogx(
-        psi, gain30 - param.antenna_gain,
-        "-g", label="$L_S = -30$ dB",
-    )
+    #plt.semilogx(
+    #    psi, gain25 - param.antenna_gain,
+    #    "-r", label="$L_S = -25$ dB",
+    #)
+    #plt.semilogx(
+    #    psi, gain30 - param.antenna_gain,
+    #    "-g", label="$L_S = -30$ dB",
+    #)
 
-    plt.ylim((-33.8, 0))
+    plt.ylim((0, 35))
     plt.xlim((1, 100))
     plt.title("ITU-R S.672-4 antenna radiation pattern")
     plt.xlabel(r"Relative off-axis angle, $\psi/\psi_0$")
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     plt.legend(loc="upper right")
 
     ax = plt.gca()
-    ax.set_yticks([-30, -20, -10, 0])
+    ax.set_yticks([-10, 0, 10, 20, 30])
     ax.set_xticks(
         np.linspace(1, 9, 9).tolist() +
         np.linspace(10, 100, 10).tolist(),

@@ -4,7 +4,14 @@ Created on Tue May 16 16:59:40 2017
 
 @author: edgar
 """
+import os
 
+
+#Define manualmente la ruta al directorio SHARC-development
+#sharc_path = "C:/tesis/SHARC-development_updated/SHARC-development"
+
+# Añade la ruta al sys.path
+#sys.path.append(sharc_path)
 import sys
 import numpy as np
 import math
@@ -26,7 +33,7 @@ class TopologyHotspot(Topology):
     """
 
     # Maximum number of tentatives when creating hotspots and checking if they overlap
-    MAX_NUM_LOOPS = 1000
+    MAX_NUM_LOOPS = 2000
 
     def __init__(self, param: ParametersHotspot, intersite_distance: float, num_clusters: int):
         """
@@ -246,15 +253,15 @@ class TopologyHotspot(Topology):
 
         # plot hotspots
         plt.scatter(
-            self.x, self.y, color='g', edgecolor="w",
+            self.x, self.y, color='b', edgecolor="w",
             linewidth=0.5, label="Hotspot",
         )
 
         # plot hotspots coverage area
         for x, y, a in zip(self.x, self.y, self.azimuth):
             pa = patches.Wedge(
-                (x, y), self.cell_radius, a - 60, a + 60, fill=False,
-                edgecolor="green", linestyle='solid',
+                (x, y), self.cell_radius, a - 60, a + 60, fill=True,
+                edgecolor="blue", facecolor = "blue", alpha = 0.3,linestyle='solid',
             )
             ax.add_patch(pa)
 
@@ -263,10 +270,10 @@ if __name__ == '__main__':
     param = ParametersHotspot()
     param.num_hotspots_per_cell = 2
 
-    param.max_dist_hotspot_ue = 60
-    param.min_dist_bs_hotspot = 0
+    param.max_dist_hotspot_ue = 100
+    param.min_dist_bs_hotspot = 35
 
-    intersite_distance = 339.81
+    intersite_distance = 520
 
     num_clusters = 1
     topology = TopologyHotspot(param, intersite_distance, num_clusters)

@@ -92,7 +92,7 @@ class ParametersAntennaImt(ParametersBase):
     def get_antenna_parameters(self) -> AntennaPar:
         if self.normalization:
             # Load data, save it in dict and close it
-            data = load(self.normalization_file)
+            data = load(self.normalization_file, allow_pickle=True) #Diego
             data_dict = {key: data[key] for key in data}
             self.normalization_data = data_dict
             data.close()

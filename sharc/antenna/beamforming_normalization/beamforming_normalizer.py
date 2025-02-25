@@ -242,7 +242,8 @@ if __name__ == '__main__':
     horiz_spacing = 0.5
     vert_spacing = 0.5
     minimum_array_gain = -200
-    down_tilt = 0
+    multiplication_factor = 12
+    down_tilt = 6
     par = AntennaPar(
         normalization,
         norm_file,
@@ -256,6 +257,8 @@ if __name__ == '__main__':
         n_columns,
         horiz_spacing,
         vert_spacing,
+        multiplication_factor,  # Falta en el código actual
+        minimum_array_gain,
         down_tilt,
     )
 

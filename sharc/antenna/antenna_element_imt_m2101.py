@@ -86,5 +86,5 @@ class AntennaElementImtM2101(object):
             self.vertical_pattern(theta)
         )
         gain = self.g_max - np.minimum(att, self.am)
-        print("element gain: ",gain)
+        #print("element gain: ",gain)
         return gain

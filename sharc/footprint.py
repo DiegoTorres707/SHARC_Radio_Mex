@@ -235,11 +235,11 @@ if __name__ == '__main__':
     plt.show()
 
     # Create 500km footprints
-    footprint_500km_10deg = Footprint(5, elevation_deg=10, sat_height=500000)
-    footprint_500km_20deg = Footprint(5, elevation_deg=20, sat_height=500000)
-    footprint_500km_30deg = Footprint(5, elevation_deg=30, sat_height=500000)
-    footprint_500km_45deg = Footprint(5, elevation_deg=45, sat_height=500000)
-    footprint_500km_90deg = Footprint(5, elevation_deg=90, sat_height=500000)
+    footprint_500km_10deg = Footprint(0.6, elevation_deg=36, sat_height=699600)
+    footprint_500km_20deg = Footprint(0.86, elevation_deg=20, sat_height=407000)
+    footprint_500km_30deg = Footprint(0.86, elevation_deg=37.1657, sat_height=407000)
+    footprint_500km_45deg = Footprint(0.86, elevation_deg=45, sat_height=407000)
+    footprint_500km_90deg = Footprint(0.86, elevation_deg=90, sat_height=407000)
     print(
         "Sat at 500km elevation 90 deg: area = {}".format(
             footprint_500km_90deg.calc_area(n),),

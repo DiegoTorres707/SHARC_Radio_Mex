@@ -331,6 +331,7 @@ class ReferenceAtmosphere:
         """
 
         h_km = altitude / 1000
+        print("h_km",h_km)
 
         if latitude <= 22:
             # low latitude

@@ -146,6 +146,8 @@ class SpectralMaskImt(SpectralMask):
                         -5, np.max((p_tx - 43.5, -20)),
                         self.spurious_emissions,
                     ])
+            elif(self.freq_mhz > 7250 and self.freq_mhz < 8400):
+                mask_dbm = np.array([-4, -13, self.spurious_emissions])
             else:
                 # this will only be reached when spurious emission has been manually set to something invalid and
                 # alternative mask should be used
@@ -275,10 +277,10 @@ class SpectralMaskImt(SpectralMask):
 if __name__ == '__main__':
     # Initialize variables
     sta_type = StationType.IMT_BS
-    p_tx = 34.061799739838875
-    freq = 7900
+    p_tx = 22
+    freq = 8125
     band = 100
-    spurious_emissions_dbm_mhz = -30
+    spurious_emissions_dbm_mhz = -13
 
     # Create mask
     msk = SpectralMaskImt(sta_type, freq, band, spurious_emissions_dbm_mhz)

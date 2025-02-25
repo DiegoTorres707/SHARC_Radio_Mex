@@ -148,6 +148,9 @@ class PropagationP619(Propagation):
         a_acc = 0.  # accumulated attenuation (in dB)
         h = self.earth_station_alt_m / 1000  # ray altitude in km
         beta = (90 - abs(apparent_elevation)) * np.pi / 180.  # incidence angle
+        print("Angulo incidencia: ",beta )
+        beta_degrees = beta * 180 / np.pi
+        print("Ángulo de incidencia en grados: ", beta_degrees)
 
         if not surf_water_vapour_density:
             _, _, surf_water_vapour_density = self.atmosphere.get_reference_atmosphere_p835(

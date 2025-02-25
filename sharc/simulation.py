@@ -198,7 +198,7 @@ class Simulation(ABC, Observable):
             self.polarization_loss = self.param_system.polarization_loss
         else:
             self.polarization_loss = 3.0
-
+        #print("polarization: ", self.polarization_loss)
     def finalize(self, *args, **kwargs):
         """
         Finalizes the simulation (collect final results, etc...)
@@ -377,7 +377,7 @@ class Simulation(ABC, Observable):
         """
         num_ue_per_bs = self.parameters.imt.ue.k * self.parameters.imt.ue.k_m
         bs_active = np.where(self.bs.active)[0]
-        print("Índices de estaciones base activas:", bs_active)
+        #print("Índices de estaciones base activas:", bs_active)
         for bs in bs_active:
             ue_list = [
                 i for i in range(
@@ -404,7 +404,7 @@ class Simulation(ABC, Observable):
         bs_active = np.where(self.bs.active)[0]
         for bs in bs_active:
             # select K UE's among the ones that are connected to BS
-            print("k: ",bs)
+            #print("k: ",bs)
             random_number_gen.shuffle(self.link[bs])
             K = self.parameters.imt.ue.k
             del self.link[bs][K:]
@@ -479,8 +479,8 @@ class Simulation(ABC, Observable):
         gains = np.zeros(phi.shape)
         if station_1.station_type is StationType.IMT_BS and not station_2.is_imt_station():
             for k in station_1_active:
-                print("k: ",k)
-                print("Tipo de estacion:", station_1.station_type)
+                #print("k: ",k)
+                #print("Tipo de estacion:", station_1.station_type)
                 for b in range(k * self.parameters.imt.ue.k, (k + 1) * self.parameters.imt.ue.k):
                     gains[b, station_2_active] = station_1.antenna[k].calculate_gain(
                         phi_vec=phi[b, station_2_active],
@@ -496,7 +496,7 @@ class Simulation(ABC, Observable):
 
         elif station_1.station_type is StationType.IMT_UE and not station_2.is_imt_station():
             for k in station_1_active:
-                print("Tipo de estacion:", station_1.station_type)
+                #print("Tipo de estacion:", station_1.station_type)
                 gains[k, station_2_active] = station_1.antenna[k].calculate_gain(
                     phi_vec=phi[k, station_2_active],
                     theta_vec=theta[
@@ -529,8 +529,8 @@ class Simulation(ABC, Observable):
             )
         else:  # for IMT <-> IMT
             for k in station_1_active:
-                print("k: ",k)
-                print("tipo de estacion:", station_1.station_type)
+                #print("k: ",k)
+                #print("tipo de estacion:", station_1.station_type)
                 gains[k, station_2_active] = station_1.antenna[k].calculate_gain(
                     phi_vec=phi[k, station_2_active],
                     theta_vec=theta[

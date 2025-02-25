@@ -144,7 +144,7 @@ class AntennaBeamformingImt(Antenna):
         phi_vec = np.asarray(kwargs["phi_vec"])
         theta_vec = np.asarray(kwargs["theta_vec"])
         station_type = kwargs.get("station_type", None)
-        print(f"Tipo de estación: {station_type}")
+        #print(f"Tipo de estación: {station_type}")
         # Check if antenna gain has to be calculated on the co-channel or
         # on the adjacent channel
         if "co_channel" in kwargs.keys():
@@ -232,10 +232,10 @@ class AntennaBeamformingImt(Antenna):
         -------
             v_vec (np.array): superposition vector
         """
-        print("phi", phi)
+        #print("phi", phi)
         r_phi = np.deg2rad(phi)
         r_theta = np.deg2rad(theta)
-        print("Theta deg revisar: ", theta)
+        #print("Theta deg revisar: ", theta)
         n = np.arange(self.n_rows) + 1
         m = np.arange(self.n_cols) + 1
 
@@ -243,7 +243,7 @@ class AntennaBeamformingImt(Antenna):
                   (m - 1) * self.dh * np.sin(r_theta) * np.sin(r_phi)
 
         v_vec = np.exp(2 * np.pi * 1.0j * exp_arg)
-        print("v_vec from function ", v_vec)
+        #print("v_vec from function ", v_vec)
         return v_vec
 
     def _weight_vector(self, phi_tilt: float, theta_tilt: float) -> np.array:
@@ -260,11 +260,11 @@ class AntennaBeamformingImt(Antenna):
         -------
             w_vec (np.array): weighting vector
         """
-        print("degrados phi_tilt", phi_tilt)
+        #print("degrados phi_tilt", phi_tilt)
         r_phi = np.deg2rad(phi_tilt)
         r_theta = np.deg2rad(theta_tilt)
-        print("r_phi: ", r_phi)
-        print("Theta - 90 deg",theta_tilt)
+        #print("r_phi: ", r_phi)
+        #print("Theta - 90 deg",theta_tilt)
         n = np.arange(self.n_rows) + 1
         m = np.arange(self.n_cols) + 1
 
@@ -273,7 +273,7 @@ class AntennaBeamformingImt(Antenna):
 
         w_vec = (1 / np.sqrt(self.n_rows * self.n_cols)) *\
             np.exp(2 * np.pi * 1.0j * exp_arg)
-        print("w_vec from function: ", w_vec)
+        #print("w_vec from function: ", w_vec)
         return w_vec
     
     #Subarray gain
@@ -300,32 +300,32 @@ class AntennaBeamformingImt(Antenna):
         # Convertir ángulos a radianes
         r_theta_3 = np.deg2rad(theta_sub_tilt)
         r_theta = np.deg2rad(theta)
-        print("theta:", theta, "r_theta:", r_theta)
-        print("theta_sub_tilt:", theta_sub_tilt, "r_theta_3:", r_theta_3)
+        #print("theta:", theta, "r_theta:", r_theta)
+        #print("theta_sub_tilt:", theta_sub_tilt, "r_theta_3:", r_theta_3)
 
         # Crear índices del subarreglo
         n_s = np.arange(n_s_rows) + 1
-        print("n_s:", n_s)
+        #print("n_s:", n_s)
 
         # Calcular w_sub
         exp_arg_s = (n_s[:, np.newaxis] - 1) * dv_sub * np.sin(r_theta_3)
         w_sub = (1 / np.sqrt(n_s_rows)) * np.exp(2 * np.pi * 1.0j * exp_arg_s)
-        print("w_sub:", w_sub)
+        #print("w_sub:", w_sub)
 
         # Calcular v_sub
         v_sub = np.exp(2 * np.pi * 1.0j * (n_s[:, np.newaxis] - 1) * dv_sub * np.cos(r_theta))
-        print("v_sub:", v_sub)
+        #print("v_sub:", v_sub)
 
         # Multiplicación y suma
         multi_p = np.multiply(v_sub, w_sub)
-        print("multi_p:", multi_p)
+        #print("multi_p:", multi_p)
 
         sumi_p = np.sum(multi_p)
-        print("sumi_p:", sumi_p)
+        #print("sumi_p:", sumi_p)
 
         # Calcular ganancia del subarreglo
         array_sub = 10 * np.log10(abs(sumi_p) ** 2)
-        print("array_sub:", array_sub)
+        #print("array_sub:", array_sub)
 
         return array_sub
 
@@ -347,24 +347,25 @@ class AntennaBeamformingImt(Antenna):
         """
 
         element_g = self.element.element_pattern(phi, theta)
-        print(f"Tipo de estación en _beam_gain: {station_type}")  # Para verificar el valor
+        #print(f"Tipo de estación en _beam_gain: {station_type}")  # Para verificar el valor
         v_vec = self._super_position_vector(phi, theta)
-        print("beam: ",beam)
+        #print("beam: ",beam)
 
         if(station_type == StationType.IMT_BS):
             sub_array_vec = self._calculate_subarray_gain(theta)
+            #sub_array_vec = 0
         else:
             sub_array_vec = 0
-        print("Ganancia del subarreglo", sub_array_vec)
+        #print("Ganancia del subarreglo", sub_array_vec)
 
         if beam == -1:
-            print("Vector V Beam = -1: ", v_vec)
-            print("W vector: Beam = -1: ", self.w_vec_list[beam])
+            #print("Vector V Beam = -1: ", v_vec)
+            #print("W vector: Beam = -1: ", self.w_vec_list[beam])
             w_vec = self._weight_vector(phi, theta - 90)
             array_g = 10 * np.log10(abs(np.sum(np.multiply(v_vec, w_vec)))**2)
         else:
-            print("Vector V: ", v_vec)
-            print("W vector: ", self.w_vec_list[beam])
+            #print("Vector V: ", v_vec)
+            #print("W vector: ", self.w_vec_list[beam])
             array_g = 10 * np.log10(
                 abs(
                     np.sum(
@@ -375,13 +376,13 @@ class AntennaBeamformingImt(Antenna):
                     ),
                 )**2,
             )
-        print("array g: ",array_g)
-        print("element g: ", element_g)
-        print("subarray g: ",sub_array_vec)
+        #print("array g: ",array_g)
+        #print("element g: ", element_g)
+        #print("subarray g: ",sub_array_vec)
         
 
         gain = sub_array_vec+ element_g + array_g
-        print("ganancia Total del arreglo", gain)
+        #print("ganancia Total del arreglo", gain)
         return gain
 
     def to_local_coord(self, phi: float, theta: float) -> tuple:
@@ -460,7 +461,7 @@ class PlotAntennaPattern(object):
         sta_type: str,
         plot_type: str,
     ):
-        print("sta_type: ", sta_type)
+        #print("sta_type: ", sta_type)
         phi_escan = 0
         theta_tilt = 90
 
@@ -474,9 +475,9 @@ class PlotAntennaPattern(object):
         else:
             raise ValueError(f"Unknown station type: {sta_type}")  # Para otros casos no válidos
     
-        print("Station_Type: ", station_type)
+        #print("Station_Type: ", station_type)
         # Plot horizontal pattern
-        phi = np.linspace(-180, 180, num=10) # le movi yo original 360
+        phi = np.linspace(-180, 180, num=360) # le movi yo original 360
         theta = theta_tilt * np.ones(np.size(phi))
         gain = np.ones(phi.shape, dtype=float) * -500
 
@@ -565,34 +566,34 @@ if __name__ == '__main__':
     ue_param = ParametersAntennaImt()
     bs_param.adjacent_antenna_model = "BEAMFORMING"
     ue_param.adjacent_antenna_model = "BEAMFORMING"
-    bs_param.normalization = False
+    bs_param.normalization = True
     ue_param.normalization = False
-    bs_param.normalization_file = 'beamforming_normalization\\bs_indoor_norm.npz'
-    ue_param.normalization_file = 'beamforming_normalization\\ue_norm.npz'
+    bs_param.normalization_file = "c:/python/SHARC-development_updated/SHARC-development/sharc/antenna/beamforming_normalization/bs_norm_8x16_050.npz"
+    ue_param.normalization_file = "c:/python/SHARC-development_updated/SHARC-development/sharc/antenna/beamforming_normalization/ue_norm_1x1_050.npz"
     bs_param.minimum_array_gain = -200
     ue_param.minimum_array_gain = -200
 
     bs_param.element_pattern = "M2101"
-    bs_param.element_max_g = 5.5
-    bs_param.element_phi_3db = 65
+    bs_param.element_max_g = 6.4
+    bs_param.element_phi_3db = 90
     bs_param.element_theta_3db = 65
     bs_param.element_am = 30
     bs_param.element_sla_v = 30
     bs_param.n_rows = 8
     bs_param.n_columns = 16
     bs_param.element_horiz_spacing = 0.5
-    bs_param.element_vert_spacing = 0.5
+    bs_param.element_vert_spacing = 2.1
     bs_param.multiplication_factor = 12
-    bs_param.downtilt = 10
+    bs_param.downtilt = 6
 
-    ue_param.element_pattern = "M2101"
-    ue_param.element_max_g = 5
+    ue_param.element_pattern = "FIXED"
+    ue_param.element_max_g = -4
     ue_param.element_phi_3db = 90
-    ue_param.element_theta_3db = 90
-    ue_param.element_am = 25
-    ue_param.element_sla_v = 25
-    ue_param.n_rows = 4
-    ue_param.n_columns = 4
+    ue_param.element_theta_3db = 65
+    ue_param.element_am = 30
+    ue_param.element_sla_v = 30
+    ue_param.n_rows = 1
+    ue_param.n_columns = 1
     ue_param.element_horiz_spacing = 0.5
     ue_param.element_vert_spacing = 0.5
     ue_param.multiplication_factor = 12

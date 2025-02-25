@@ -225,9 +225,9 @@ class PropagationClutterLoss(Propagation):
 
 if __name__ == '__main__':
 
-    elevation_angle = np.array([90, 80, 70, 60, 50, 40, 30, 20, 15, 10, 5, 0])
+    elevation_angle = np.array([67.21, 45, 30, 20])
     loc_percentage = np.linspace(0.01, 0.995, 1000)
-    frequency = 30000 * np.ones(elevation_angle.shape)
+    frequency = 8150 * np.ones(elevation_angle.shape)
 
     random_number_gen = np.random.RandomState(101)
     cl = PropagationClutterLoss(random_number_gen)
@@ -247,11 +247,11 @@ if __name__ == '__main__':
         ax.plot(clutter_loss[j, :], 100 * loc_percentage,
                 label="%i deg" % elevation_angle[j], linewidth=1)
 
-    plt.title("Cumulative distribution of clutter loss not exceeded for 30 GHz")
+    plt.title("Cumulative distribution of clutter loss not exceeded for 8 150 MHz")
     plt.xlabel("clutter loss [dB]")
 
     plt.ylabel("percent of locations [%]")
-    plt.xlim((-10, 70))
+    plt.xlim((-10, 20))
     plt.ylim((0, 100))
     plt.legend(loc="lower right")
     plt.tight_layout()
@@ -259,7 +259,7 @@ if __name__ == '__main__':
     plt.show()
 
     distance = np.linspace(250, 100000, 100000)
-    frequency = np.array([1, 2, 4, 8, 16, 32, 67]) * 1e3
+    frequency = np.array([8.125]) * 1e3
 
     loc_percentage = 0.5 * np.ones(distance.shape)
     apply_both_ends = False
